@@ -1,0 +1,36 @@
+<%= link_to("Back to Users Page", items_path, :class => 'back-link') %>
+
+<div class = "items edit">
+  <h1>Update item</h1>
+
+  <%= form_for(@item) do |f| %>
+
+  <table summary = "item form fields">
+    <tr>
+      <th>Item Name</th>
+      <td><%= f.text_field(:name) %></td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td><%= f.text_field(:description) %></td>
+    </tr>
+    <tr>
+      <th>Total Stock</th>
+      <td><%= f.text_field(:total_stock) %></td>
+    </tr>
+    <tr>
+      <th>Available Stock</th>
+      <td><%= f.text_field(:avail_stock) %></td>
+    </tr>
+    <tr>
+      <th>Location</th>
+      <td><%= f.text_field(:location) %></td>
+    </tr>
+  </table>
+
+  <div class = "form-buttons">
+    <%= f.submit("Update item") %>
+  </div>
+
+  <% end %>
+</div>

@@ -1,0 +1,34 @@
+<div class= "top-button">
+  <button type="button"><%= link_to("Back to Users Page", users_path, :class => 'back-link') %></button>
+</div>
+
+<div class = "container">
+  <h1><%= @user.first_name %> <%= @user.last_name %>'s Items</h1>
+
+  <%= form_tag({:action => 'showAllUserItems', :id => @user.id}, :method => :get) do %>
+    <p>Sort By: <%= select_tag "sort_type", options_for_select(['Item Name',
+      'Amount', 'Checkout Date', 'Checkout Reason'], @sort_type)%>
+      <%= select_tag "sort_dir", options_for_select(['A -> Z', 'Z -> A'], @sort_dir)%>
+      <%= hidden_field_tag "id", @user.id %>
+      <%= submit_tag("Search") %></p>
+  <% end %>
+
+  <table class = "table" summary=" My Checked out item List">
+  <tr class = "header">
+    <th>Item Name</th>
+    <th>Amount</th>
+    <th>Checkout Date</th>
+    <th>Checkout Reason</th>
+
+  </tr>
+  <% @checkouts_sorted.each do |checkout| %>
+  <tr>
+    <td><%= checkout.item.name %></td>
+    <td><%= checkout.amount %></td>
+    <td><%= checkout.updated_at.to_date%></td>
+    <td><%= checkout.checkout_reason %></td>
+  </tr>
+  <% end %>
+</table>
+</div>
+</div>

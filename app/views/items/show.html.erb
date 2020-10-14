@@ -1,0 +1,36 @@
+<div class="top-button">
+  <button type="button"><%= link_to("Back to Inventory Page", items_path, :class => 'back-link') %></button>
+</div>
+
+<div class = "container">
+  <h1>Item Info</h1>
+
+  <button><%= link_to("Edit item", edit_item_path(@item), :class => 'back-link') %></button>
+
+  <table class="table" summary = "item details">
+    <tr>
+      <th>Name</th>
+      <td><%= @item.name %></td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td><%= @item.description %></td>
+    </tr>
+    <tr>
+      <th>Total Stock</th>
+      <td><%= @item.total_stock %></td>
+    </tr>
+    <tr>
+      <th>Available Stock</th>
+      <td><%= @item.avail_stock %></td>
+    </tr>
+    <tr>
+        <th>Merchandise</th>
+        <td><%= @item.merch %></td>
+    </tr>
+    <tr>
+      <th>Location</th>
+      <td><%= @item.location %></td>
+    </tr>
+  </table>
+</div>

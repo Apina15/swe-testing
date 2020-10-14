@@ -1,0 +1,42 @@
+<div class = "top-button">
+  <button type="button"><%= link_to("Back to Main Page", access_menu_path, :class => 'back-link') %></button>
+</div>
+<div class = "container">
+
+  <h1>Users</h1>
+
+  <%= form_tag({:action => 'index'}, :method => :get) do %>
+    <p>Sort By: <%= select_tag "sort_type", options_for_select(['First Name', 'Last Name',
+      'Permissions', 'Amount of Rented Items'], @sort_type)%>
+      <%= select_tag "sort_dir", options_for_select(['A -> Z', 'Z -> A'], @sort_dir)%>
+      <%= submit_tag("Search") %></p>
+  <% end %>
+
+  <%= link_to("Add New user", new_user_path, :class=> 'action new') %>
+
+  <table class = "table" summary="user List">
+    <tr class = "header">
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Permissions</th>
+      <th>Amount of rented items</th>
+      <th>Key checkout out</th>
+      <th>Options</th>
+    </tr>
+    <% @users_sorted.each do |user| %>
+    <tr>
+      <td><%= user.first_name %></td>
+      <td><%= user.last_name %></td>
+      <td><%= user.permissions %></td>
+      <td><%= user.item_ids.length %></td>
+      <td><%= user.hasKey == 0 ? 'No' : 'Yes' %></td>
+      <td>
+        <%= link_to("Edit", edit_user_path(user), :class => 'action edit') %>
+        <%= link_to("Show Items", {:controller => 'checkout', :action => "showAllUserItems", :id => user.id}) %>
+        <%= link_to("Delete", delete_user_path(user), :class => 'action delete') %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+

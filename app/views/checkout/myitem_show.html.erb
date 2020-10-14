@@ -1,0 +1,38 @@
+<div class="top-button">
+  <button type="button"><%= link_to("Back to My Items Page", checkout_myItems_path, :class => 'back-link') %></button>
+</div>
+
+<div class = "container">
+  <h1>Checkout Info</h1>
+
+  <table class="table" summary = "checkout details">
+    <tr>
+      <th>Name</th>
+      <td><%= @checkout.item.name %></td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td><%= @checkout.item.description %></td>
+    </tr>
+    <tr>
+      <th>Amount</th>
+      <td><%= @checkout.amount %></td>
+    </tr>
+    <tr>
+      <th>Created at</th>
+      <td><%= @checkout.created_at.to_date %></td>
+    </tr>
+    <tr>
+      <th>Merchandise</th>
+      <td><%= @checkout.item.merch %></td>
+    </tr>
+    <tr>
+      <th>Updated at</th>
+      <td><%= @checkout.updated_at.to_date %></td>
+    </tr>
+    <tr>
+      <th>Reason</th>
+      <td><%= @checkout.checkout_reason %></td>
+    </tr>
+  </table>
+</div>

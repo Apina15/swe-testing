@@ -1,0 +1,21 @@
+<% @page_title = "Login" %>
+
+<div class="container center-text">
+  <%= form_tag(access_attempt_login_path, :method => :post) do %>
+  <table>
+    <tr>
+      <td><%= label_tag(:email) %></td>
+      <td><%= text_field_tag(:email, params[:email]) %></td>
+    </tr>
+    <tr>
+      <td><%= label_tag(:password) %></td>
+      <td><%= password_field_tag(:password) %></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><%= submit_tag("Log In") %></td>
+    </tr>
+  </table>
+  <% end %>
+  <%= link_to("Register", new_user_path, :class => 'register-link') %>
+</div>

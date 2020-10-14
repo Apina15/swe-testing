@@ -1,0 +1,7 @@
+tmp/
+node_modules/
+.bundle/
+log/
+**/.DS_Store
+public/packs/js/
+config/database.yml

@@ -1,0 +1,20 @@
+[2020-09-25 10:16:43.960] [exthost] [info] extension host started
+[2020-09-25 10:16:43.997] [exthost] [info] ExtensionService#_doActivateExtension vscode.microsoft-authentication {"startup":false,"extensionId":{"value":"vscode.microsoft-authentication","_lower":"vscode.microsoft-authentication"},"activationEvent":"onAuthenticationRequest:microsoft"}
+[2020-09-25 10:16:43.998] [exthost] [info] ExtensionService#loadCommonJSModule file:///c:/Users/Brandon/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/microsoft-authentication/dist/extension.js
+[2020-09-25 10:16:44.015] [exthost] [info] ExtensionService#_doActivateExtension vscode.github-authentication {"startup":false,"extensionId":{"value":"vscode.github-authentication","_lower":"vscode.github-authentication"},"activationEvent":"onAuthenticationRequest:github"}
+[2020-09-25 10:16:44.015] [exthost] [info] ExtensionService#loadCommonJSModule file:///c:/Users/Brandon/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/github-authentication/dist/extension.js
+[2020-09-25 10:16:44.026] [exthost] [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch {"startup":true,"extensionId":{"value":"vscode.debug-auto-launch","_lower":"vscode.debug-auto-launch"},"activationEvent":"*"}
+[2020-09-25 10:16:44.026] [exthost] [info] ExtensionService#loadCommonJSModule file:///c:/Users/Brandon/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/debug-auto-launch/dist/extension
+[2020-09-25 10:16:44.030] [exthost] [info] ExtensionService#_doActivateExtension vscode.emmet {"startup":true,"extensionId":{"value":"vscode.emmet","_lower":"vscode.emmet"},"activationEvent":"*"}
+[2020-09-25 10:16:44.030] [exthost] [info] ExtensionService#loadCommonJSModule file:///c:/Users/Brandon/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/emmet/dist/node/emmetNodeMain
+[2020-09-25 10:16:44.048] [exthost] [info] ExtensionService#_doActivateExtension vscode.git {"startup":true,"extensionId":{"value":"vscode.github","_lower":"vscode.github"},"activationEvent":"*"}
+[2020-09-25 10:16:44.048] [exthost] [info] ExtensionService#loadCommonJSModule file:///c:/Users/Brandon/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/git/dist/main
+[2020-09-25 10:16:44.083] [exthost] [info] ExtensionService#_doActivateExtension vscode.merge-conflict {"startup":true,"extensionId":{"value":"vscode.merge-conflict","_lower":"vscode.merge-conflict"},"activationEvent":"*"}
+[2020-09-25 10:16:44.083] [exthost] [info] ExtensionService#loadCommonJSModule file:///c:/Users/Brandon/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/merge-conflict/dist/mergeConflictMain
+[2020-09-25 10:16:44.087] [exthost] [info] ExtensionService#_doActivateExtension vscode.search-result {"startup":true,"extensionId":{"value":"vscode.search-result","_lower":"vscode.search-result"},"activationEvent":"*"}
+[2020-09-25 10:16:44.088] [exthost] [info] ExtensionService#loadCommonJSModule file:///c:/Users/Brandon/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/search-result/dist/extension.js
+[2020-09-25 10:16:44.090] [exthost] [info] ExtensionService#_doActivateExtension etmoffat.pip-packages {"startup":true,"extensionId":{"value":"etmoffat.pip-packages","_lower":"etmoffat.pip-packages"},"activationEvent":"*"}
+[2020-09-25 10:16:44.090] [exthost] [info] ExtensionService#loadCommonJSModule file:///c:/Users/Brandon/.vscode/extensions/etmoffat.pip-packages-0.4.3/out/pip-updater
+[2020-09-25 10:16:44.158] [exthost] [info] ExtensionService#_doActivateExtension vscode.github {"startup":true,"extensionId":{"value":"vscode.github","_lower":"vscode.github"},"activationEvent":"*"}
+[2020-09-25 10:16:44.158] [exthost] [info] ExtensionService#loadCommonJSModule file:///c:/Users/Brandon/AppData/Local/Programs/Microsoft VS Code/resources/app/extensions/github/dist/extension.js
+[2020-09-25 10:16:44.193] [exthost] [info] eager extensions activated

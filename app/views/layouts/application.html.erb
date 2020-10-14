@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SweInventoryTracker</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if !!flash[:errors] %>
+      <% flash[:errors].each do |e| %>
+        <p style="color: red"><%= e %> </p> <br/>
+      <% end %>
+    <% end %>
+
+    <% if flash[:notice] %>
+      <p style =" color: red"><%= notice %> </p> <br/>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>

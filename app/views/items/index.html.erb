@@ -1,0 +1,41 @@
+<div class = "top-button">
+  <button type="button"><%= link_to("Back to Main Page", access_menu_path, :class => 'back-link') %></button>
+</div>
+
+<div class = "container">
+
+  <h1>Inventory List</h1>
+
+  <%= form_tag({:action => 'index'}, :method => :get) do %>
+    <p>Sort By: <%= select_tag "sort_type", options_for_select(['Name', 'Description',
+      'Total Stock', 'Available Stock'], @sort_type)%>
+      <%= select_tag "sort_dir", options_for_select(['A -> Z', 'Z -> A'], @sort_dir)%>
+      <%= submit_tag("Search") %></p>
+  <% end %>
+
+  <%= link_to("Add New Item", new_item_path, :class=> 'action new') %>
+  <table class = "table" summary="item List">
+    <tr class = "header">
+      <th>Name</th>
+      <th>Description</th>
+      <th>Total Stock</th>
+      <th>Available Stock</th>
+      <th>Merch</th>
+    </tr>
+    <% @items_sorted.each do |item| %>
+    <tr>
+      <td><%= item.name %></td>
+      <td><%= item.description %></td>
+      <td><%= item.total_stock %></td>
+      <td><%= item.avail_stock %></td>
+      <td><%= item.merch %></td>
+      <td>
+        <%= link_to("Details", item_path(item), :class => 'action show') %>
+        <%= link_to("Edit", edit_item_path(item), :class => 'action edit') %>
+        <%= link_to("Delete", delete_item_path(item), :class => 'action delete') %>
+        <%= link_to("Checkout", {:controller => 'checkout', :action => 'index', :id => item.id}, :class => 'action checkout') %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

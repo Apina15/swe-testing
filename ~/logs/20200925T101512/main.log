@@ -1,0 +1,2 @@
+[2020-09-25 10:15:12.629] [main] [error] [File Watcher (node.js)] Error: ENOENT: no such file or directory, stat 'c:\Users\Brandon\Documents\GitHub\SWE-Inventory-Tracker\~\User'
+[2020-09-25 10:15:13.118] [main] [info] update#setState idle

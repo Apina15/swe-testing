@@ -1,0 +1,11 @@
+<% @page_title = "Unauthorized Account" %>
+
+<div class="menu">
+<h2>Please wait to be granted access by the administrator.</h2>
+  <div class="identity">
+  <p>Logged in as: <%= @user.first_name%> <%= @user.last_name%></p>
+  </div>
+    <ul>
+        <li><%= link_to("Logout", access_logout_path) %></li>
+    </ul>
+</div>
