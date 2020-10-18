@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col" align="center">
+      <div class="Titles">
+         View Details
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col"align="center">
+      <div class="card" style="margin-top:2%; width:50%; margin-left:0%;" align="center">
+        <div class="card-body">
+        <h1>Show Check Out #<%=@transaction.id %> Details</h1>
+        <table summary="transaction Detail view">
+          <tr class="tableEntries">
+            <th>Check Out Person Name</th>
+            <td style="padding:0 0 0 15px;"><%= @transaction.requestor_name %></td>
+          </tr>
+          <tr class="tableEntries">
+            <th>Check Out Person Email</th>
+            <td style="padding:0 0 0 15px;"><%= @transaction.requestor_email %></td>
+          </tr>
+          <tr class="tableEntries">
+            <th>Item Checked Out</th>
+            <td style="padding:0 0 0 15px;"><%= @transaction.item_name %></td>
+          </tr>
+          <tr class="tableEntries">
+            <th>Quantity Checked Out</th>
+            <td style="padding:0 0 0 15px;"><%= @transaction.item_quantity %></td>
+          </tr>
+          <tr class="tableEntries">
+            <th>Reminder To Return Date</th>
+            <td style="padding:0 0 0 15px;"><%= @transaction.remind_date %></td>
+          </tr>
+          <tr class="tableEntries">
+            <th>Checked Out On</th>
+            <td style="padding:0 0 0 15px;"><%= @transaction.created_at %></td>
+          </tr>
+          <tr class="tableEntries">
+            <th>Checked Out Status</th>
+            <td style="padding:0 0 0 15px;"><%= @transaction.type_ %></td>
+          </tr>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>

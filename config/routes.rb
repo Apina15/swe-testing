@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post 'access/attempt_login'
   get 'access/logout'
   get 'access/unauthorized'
-  
+
   resources :users, :except => [:show] do
       member do
           get :delete
@@ -21,6 +21,12 @@ Rails.application.routes.draw do
     member do
       get :delete
     end
+  end
+
+  resources :transactions do
+   member do
+     get :delete
+   end
   end
 
   get 'checkout', to: 'checkout#index'
@@ -37,7 +43,7 @@ Rails.application.routes.draw do
 
   get 'users/key', to: 'users#will_checkout_or_return_key'
   post 'users/key', to: 'users#checkout_or_return_key'
-  
+
   #get 'items/index'
   #get 'items/show'
   #get 'items/new'

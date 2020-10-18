@@ -30,6 +30,7 @@ gem 'bcrypt', '~> 3.1.7'
 # Bootstrap
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
+gem 'bootstrap_form'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
