@@ -6,13 +6,17 @@ feature 'Checkouts' do
         fill_in 'email', with: 'SWE.InventoryTracker@gmail.com'
         fill_in 'password', with: 'h4gQ4dgHB6mzCK2'
         click_on 'Log In'
-        click_link('Manage Items')
+        expect(page).to have_content('Admin Menu')
+        #click_button('Manage Items')
+        #visit items_path
         visit new_item_path
+        expect(page).to have_content('New Item Form')
         fill_in 'item_name', with: 'Test Merchandise'
         fill_in 'item_description', with: 'Test organization merchandise'
         fill_in 'item_total_stock', with: '100'
         fill_in 'item_avail_stock', with: '100'
         fill_in 'item_location', with: 'Storage Unit'
+        #fill_in 'item_merch', with: 'Yes'
         click_on 'Add New item'
     end
 
@@ -67,7 +71,7 @@ feature 'Checkouts' do
         expect(page).to have_no_content('10')
         expect(page).to have_no_content('90')
     end
-    
+
     scenario 'see recent checkout in show all for for merch items' do
         expect(page).to have_content('Inventory List')
         expect(page).to have_content('Test Merchandise')
