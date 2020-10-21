@@ -1,7 +1,12 @@
 tmp/
 node_modules/
 .bundle/
-log/
 **/.DS_Store
 public/packs/js/
 config/database.yml
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep

@@ -23,7 +23,10 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 #gem 'mini_racer'
 #gem 'libv8'
-
+# for exporting to excel
+gem 'axlsx'
+gem 'axlsx_rails'
+gem 'rubyzip'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

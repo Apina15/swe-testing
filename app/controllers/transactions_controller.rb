@@ -27,18 +27,18 @@ class TransactionsController < ApplicationController
     @transaction.remind_date = remind_date # might need to format this
     # @transaction.user_id = session[:user_id]
 
-    #@log = Log.new
-    #@log.id = @transaction.id
-    #@log.requestor_name = @transaction.requestor_name
-    #@log.requestor_email = @transaction.requestor_email
-    #@log.type_ = @transaction.type_
-    #@log.item_name = @transaction.item_name
-    #@log.item_quantity = @transaction.item_quantity
+    @log = Log.new
+    @log.id = @transaction.id
+    @log.requestor_name = @transaction.requestor_name
+    @log.requestor_email = @transaction.requestor_email
+    @log.type_ = @transaction.type_
+    @log.item_name = @transaction.item_name
+    @log.item_quantity = @transaction.item_quantity
     # @log.user_id = session[:user_id]
 
     if is_email_valid?(@transaction.requestor_email)
       if @transaction.save
-        #@log.save
+        @log.save
         flash[:notice] = 'Transaction Created Successfully!'
         redirect_to(transactions_path)
       else
@@ -84,6 +84,17 @@ class TransactionsController < ApplicationController
       remind_date = Time.now + (2 * 7 * 24 * 60 * 60) # get the time current time and set it to two weeks later
       @transaction.remind_date = remind_date # might need to
       @transaction.save
+
+      @log = Log.new
+      @log.id = @transaction.id
+      @log.requestor_name = @transaction.requestor_name
+      @log.requestor_email = @transaction.requestor_email
+      @log.type_ = @transaction.type_
+      @log.item_name = @transaction.item_name
+      @log.item_quantity = @transaction.item_quantity
+
+      @log.save
+
       flash[:notice] = "Item checked out with transaction controller"
       redirect_to({:controller => 'items', :action => 'index'})
     end
@@ -97,10 +108,10 @@ class TransactionsController < ApplicationController
 
   def update
     @transaction = Transaction.find(params[:id])
-    #@log = Log.find(params[:id])
-    #@log.type_ = 'Checked In'
+    @log = Log.find(params[:id])
+    @log.type_ = 'Checked In'
     time = Time.new
-    #@log.check_in = Date.new(time.year, time.month, time.day)
+    @log.check_in = Date.new(time.year, time.month, time.day)
     @transaction.type_ = 'Checked In' # hopefully updates the 'type_' attribute in table
 
     # update to include items model
@@ -115,7 +126,7 @@ class TransactionsController < ApplicationController
 
 
     if @transaction.save
-    #  @log.save
+      @log.save
       flash[:notice] = "Check Out ID #'#{@transaction.id}' Checked In Successfully!"
       redirect_to(transaction_path(@transaction))
     else

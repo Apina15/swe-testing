@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   #get 'transactions/edit'
   #get 'transactions/delete'
 
+  resources :log, only: [:index]
 
   get 'checkout', to: 'checkout#index'
   post 'checkout/submit'
