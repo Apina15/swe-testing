@@ -50,7 +50,47 @@ class TransactionsController < ApplicationController
     end
   end
 
+  # Update this to checkout items from database
+  def checkout
+    #emulate checkout/index
+    @item = Item.find(params[:id])
+  end
+
+  def submit
+    #emulate checkout/submit
+    @item = Item.find(params[:id])
+    @user = User.find(params[:uid])
+
+    if (params[:checkout_amount].to_i > @item.avail_stock)
+        flash[:notice] = "Insufficient inventory."
+        redirect_to({:controller => 'items', :action => 'index', :id => @item.id})
+    else
+      @item.avail_stock = @item.avail_stock-(params[:checkout_amount].to_i)
+      if @item.merch == 'Yes'
+          @item.total_stock = @item.total_stock - (params[:checkout_amount].to_i)
+      end
+      @item.save
+
+      @user.item_ids.append(@item.id)
+      @user.save
+
+      @transaction = Transaction.new
+      @transaction.user_id = @user.id
+      @transaction.requestor_name = @user.first_name + " " + @user.last_name
+      @transaction.requestor_email = @user.email
+      @transaction.item_name = @item.name
+      @transaction.item_quantity = params[:checkout_amount]
+      @transaction.type_ = 'Checked Out'
+      remind_date = Time.now + (2 * 7 * 24 * 60 * 60) # get the time current time and set it to two weeks later
+      @transaction.remind_date = remind_date # might need to
+      @transaction.save
+      flash[:notice] = "Item checked out with transaction controller"
+      redirect_to({:controller => 'items', :action => 'index'})
+    end
+  end
+
   # in this case, I am using edit/update as the "check in" form
+  # Update this to re-enter Item into databse
   def edit
     @transaction = Transaction.find(params[:id])
   end
@@ -62,6 +102,17 @@ class TransactionsController < ApplicationController
     time = Time.new
     #@log.check_in = Date.new(time.year, time.month, time.day)
     @transaction.type_ = 'Checked In' # hopefully updates the 'type_' attribute in table
+
+    # update to include items model
+
+    @item = Item.find_by name: @transaction.item_name
+    @item.avail_stock = @item.avail_stock+@transaction.item_quantity;
+    if @item.merch == "Yes"
+      @item.total_stock = @item.total_stock+@transaction.item_quantity;
+      ## TODO: Create form to edit this value based on merch given away
+    end
+    @item.save;
+
 
     if @transaction.save
     #  @log.save

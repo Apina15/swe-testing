@@ -23,11 +23,22 @@ Rails.application.routes.draw do
     end
   end
 
+# add new views before others so they are parsed and routed properly
+  get 'transactions/checkout', to:'transactions#checkout'
+  post 'transactions/submit'
+
   resources :transactions do
    member do
      get :delete
    end
   end
+  #Manual so it recognizes new views
+  #get 'transactions', to: 'transactions#index'
+  #get 'transactions/show'
+  #get 'transactions/new'
+  #get 'transactions/edit'
+  #get 'transactions/delete'
+
 
   get 'checkout', to: 'checkout#index'
   post 'checkout/submit'

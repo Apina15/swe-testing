@@ -1,0 +1,34 @@
+<div class="top-button">
+  <button type="button"><%= link_to("Back to Inventory Page", items_path, :class => 'back-link') %></button>
+</div>
+
+<div class = "container">
+  <h1>Checkout Item Form</h1>
+
+  <%= form_tag({:action => 'submit', :id => @item.id, :uid => session[:user_id]}, :method => :post) do %>
+    <table class="table" summary = "item details">
+      <tr>
+        <th>Name</th>
+        <td><%= @item.name %></td>
+      </tr>
+      <tr>
+        <th>Description</th>
+        <td><%= @item.description %></td>
+      </tr>
+      <tr>
+        <th>Total Stock</th>
+        <td><%= @item.total_stock %></td>
+      </tr>
+      <tr>
+        <th>Available Stock</th>
+        <td><%= @item.avail_stock %></td>
+      </tr>
+      <tr>
+        <th>Quantity</th>
+        <td><%= text_field_tag(:checkout_amount) %></td>
+      </tr>
+    </table>
+
+    <%= submit_tag("Submit") %>
+  <% end %>
+</div>

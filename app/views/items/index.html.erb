@@ -33,7 +33,7 @@
         <%= link_to("Details", item_path(item), :class => 'action show') %>
         <%= link_to("Edit", edit_item_path(item), :class => 'action edit') %>
         <%= link_to("Delete", delete_item_path(item), :class => 'action delete') %>
-        <%= link_to("Checkout", {:controller => 'checkout', :action => 'index', :id => item.id}, :class => 'action checkout') %>
+        <%= link_to("Checkout", {:controller => 'transactions', :action => 'checkout', :id => item.id}, :class => 'action checkout') %>
       </td>
     </tr>
     <% end %>
