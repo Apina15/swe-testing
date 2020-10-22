@@ -1,11 +1,17 @@
 class UsersController < ApplicationController
-    
+
     before_action :confirmed_logged_in, :except => [:new, :create]
     before_action :user_is_admin, :except => [:new, :create]
-  
+
   def index
-      @users = User.all
-      if (params[:sort_type] != nil)
+    @users = User.all
+    if ((params[:search_tag] != nil) && (params[:search_tag] != ""))
+      @users_first_name = User.where(first_name: params[:search_tag])
+      @users_last_name = User.where(last_name: params[:search_tag])
+      @users_permissions = User.where(permissions: params[:search_tag])
+      @users_sorted = [].concat(@users_first_name).concat(@users_last_name).concat(@users_permissions)
+      @users_sorted = @users_sorted.uniq
+    elsif (params[:sort_type] != nil)
         @sort_type = params[:sort_type]
         @sort_dir = params[:sort_dir]
         if @sort_type == 'First Name'
@@ -28,11 +34,11 @@ class UsersController < ApplicationController
         @users_sorted = @users
     end
   end
-  
+
   def new
       @user = User.new
   end
-  
+
   def create
     @admins = User.where(:permissions=>2)
     @user = User.new(user_params)
@@ -48,15 +54,15 @@ class UsersController < ApplicationController
       render('new')
     end
   end
-  
+
   def edit
       @user = User.find(params[:id])
   end
-  
+
   def show
       @user = User.find(params[:id])
   end
-  
+
   def update
     @user = User.find(params[:id])
     @perm = @user.permissions
@@ -77,14 +83,14 @@ class UsersController < ApplicationController
   def delete
     @user = User.find(params[:id])
   end
-  
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy
     flash[:notice] = "The User has been removed."
     redirect_to(users_path)
   end
-  
+
   def will_checkout_or_return_key
     @user = User.find_by_id(session[:user_id])
   end
@@ -110,6 +116,18 @@ class UsersController < ApplicationController
     redirect_to(access_menu_path)
   end
 
+  def manage
+    @user = User.find_by_id(session[:user_id])
+  end
+
+  def manage_update
+    @user = User.find_by_id(session[:user_id])
+    if @user.update_attributes(user_params)
+      flash[:notice] = 'Account details updated successfully.'
+      redirect_to(access_menu_path)
+    end
+  end
+
   private
 
   def user_params
@@ -122,5 +140,5 @@ class UsersController < ApplicationController
       :password
     )
   end
-  
+
 end

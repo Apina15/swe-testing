@@ -8,11 +8,14 @@
   <div class="container">
     <button type="button"><%= link_to("Manage Items", items_path) %></button>
     <button type="button"><%= link_to("Manage Users", users_path) %></button>
+    <!-- refactor out checkout controller
     <button type="button"><%= link_to("View All Checked Out Items", checkout_showAll_url) %></button>
     <button type="button"><%= link_to("My Checked Out Items", checkout_myItems_url) %></button>
+    -->
     <button type="button" id="key"><%= link_to("Checkout/Return Key", users_key_path) %></button>
     <button type="button" id="transaction"><%= link_to("Transactions", transactions_path) %></button>
     <button type="button" id="logs"><%= link_to("Logs", log_index_path) %></button>
+    <button type="button" id="edit_user">  <%= link_to("Manage My Account", manage_user_path(@user)) %></button>
     <button type="button"><%= link_to("Logout", access_logout_path) %></button>
   </div>
 </div>

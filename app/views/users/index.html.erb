@@ -5,14 +5,14 @@
 
   <h1>Users</h1>
 
+  <%= link_to("Add New user", new_user_path, :class=> 'action new') %>
+
   <%= form_tag({:action => 'index'}, :method => :get) do %>
     <p>Sort By: <%= select_tag "sort_type", options_for_select(['First Name', 'Last Name',
       'Permissions', 'Amount of Rented Items'], @sort_type)%>
       <%= select_tag "sort_dir", options_for_select(['A -> Z', 'Z -> A'], @sort_dir)%>
-      <%= submit_tag("Search") %></p>
+      <%= submit_tag("Sort") %></p>
   <% end %>
-
-  <%= link_to("Add New user", new_user_path, :class=> 'action new') %>
 
   <table class = "table" summary="user List">
     <tr class = "header">
@@ -39,4 +39,3 @@
     <% end %>
   </table>
 </div>
-

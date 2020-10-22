@@ -2,10 +2,17 @@ class ItemsController < ApplicationController
 
   before_action :confirmed_logged_in
   before_action :user_has_permissions
-    
+
   def index
     @items = Item.all
-    if (params[:sort_type] != nil)
+    if ((params[:search_tag] != nil) && (params[:search_tag] != ""))
+      @items_name = Item.where(name: params[:search_tag])
+      @items_desc = Item.where(description: params[:search_tag])
+      @items_total = Item.where(total_stock: params[:search_tag])
+      @items_avail = Item.where(avail_stock: params[:search_tag])
+      @items_sorted = [].concat(@items_name).concat(@items_desc).concat(@items_total).concat(@items_avail)
+      @items_sorted = @items_sorted.uniq
+    elsif (params[:sort_type] != nil)
       @sort_type = params[:sort_type]
       @sort_dir = params[:sort_dir]
       if @sort_type == 'Name'
