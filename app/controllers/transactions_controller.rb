@@ -20,6 +20,7 @@ class TransactionsController < ApplicationController
     #@log = Log.new
   end
 
+#doesn't end up being used
   def create
     @transaction = Transaction.new(transaction_params) # need to find out how to set the 2 week immediately
     @transaction.type_ = 'Checked Out'
@@ -124,6 +125,11 @@ class TransactionsController < ApplicationController
     end
     @item.save;
 
+    @user = User.find(@transaction.user_id)
+
+    # TODO: Update to account for :return_amount in form
+    @user.item_ids.delete(@item.id)
+    @user.save
 
     if @transaction.save
       @log.save
