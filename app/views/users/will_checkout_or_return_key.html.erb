@@ -5,13 +5,12 @@
 
   <%= form_for @user, :url => {:action => 'checkout_or_return_key'}, :method => :post do |f| %>
   <p> Would you like to checkout or return a key? </p>
-  
+
   <div class = "form-buttons">
-    <%= f.submit("Checkout Key") %>
-    <%= f.submit("Return Key") %>
+    <button type="button" id="checkout_key"><%= f.submit("Checkout Key") %></button>
+    <button type="button" id="return_key"><%= f.submit("Return Key") %></button>
   </div>
 
   <% end %>
 
 </div>
-

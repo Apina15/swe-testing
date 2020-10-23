@@ -22,6 +22,8 @@
             <th style="padding:0 15px 0 0;">Item</th>
             <th style="padding:0 15px 0 0;">Quantity</th>
             <th style="padding:0 15px 0 0;">Checkout date</th>
+            <th style="padding:0 15px 0 0;">Status</th>
+            <th style="padding:0 15px 0 0;">Details</th>
         </tr>
         <% @transactions.each do |t| %>
             <% if t.type_ == "Checked In" %>
@@ -36,7 +38,7 @@
             <td style="padding:0 15px 0 0;"><%= t.type_ %></td>
             <td class="actions" style="padding:0 15px 0 0;">
               <button type="button" ><%= link_to("View Details", transaction_path(t), :class => 'action show') %></button>
-              <button type="button" ><%= link_to("Check In", edit_transaction_path(t), :class => 'action edit') %></button>
+              <button type="button" ><%= link_to("Return", edit_transaction_path(t), :class => 'action edit') %></button>
             </td>
         </tr>
         <% end %>
