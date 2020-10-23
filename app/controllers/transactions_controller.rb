@@ -145,6 +145,34 @@ class TransactionsController < ApplicationController
 
   def destroy; end
 
+  # Create a function to view all items checked out by the user
+  def showAllUserItems
+      @transactions = Transaction.where(user_id: params[:id]).sorted
+      @user = User.find(params[:id])
+      if (params[:sort_type] != nil)
+          @sort_type = params[:sort_type]
+          @sort_dir = params[:sort_dir]
+          if @sort_type == 'Item Name'
+              @transactions_sorted = @transactions.sort_by { |transaction| transaction.item_name }
+          elsif @sort_type == 'Person'
+              @transactions_sorted = @transactions.sort_by { |transaction| [transaction.requestor_name] }
+          elsif @sort_type == 'Checkout Date'
+              @transactions_sorted = @transactions.sort_by { |transaction| transaction.updated_at.in_time_zone('America/Chicago').strftime('%I:%M:%S %p') }
+          elsif @sort_type == 'Amount'
+              @transactions_sorted = @transactions.sort_by { |transaction| transaction.item_quantity }
+          end
+
+          if @sort_dir == 'Z -> A'
+              @transactions_sorted = @transactions_sorted.reverse
+          end
+
+      else
+          @sort_type = 'Checkout Date'
+          @sort_dir = 'A -> Z'
+          @transactions_sorted = @transactions
+      end
+  end
+
   def transaction_params
     params.require(:transaction).permit(:requestor_name, :requestor_email, :type_, :item_name, :item_quantity, :remind_date)
   end
