@@ -84,6 +84,7 @@ class TransactionsController < ApplicationController
       @transaction.type_ = 'Checked Out'
       remind_date = Time.now + (2 * 7 * 24 * 60 * 60) # get the time current time and set it to two weeks later
       @transaction.remind_date = remind_date # might need to
+      @transaction.event = params[:event]
       @transaction.save
 
       @log = Log.new
@@ -93,6 +94,7 @@ class TransactionsController < ApplicationController
       @log.type_ = @transaction.type_
       @log.item_name = @transaction.item_name
       @log.item_quantity = @transaction.item_quantity
+      @log.event = @transaction.event
 
       @log.save
 
@@ -160,6 +162,8 @@ class TransactionsController < ApplicationController
               @transactions_sorted = @transactions.sort_by { |transaction| transaction.updated_at.in_time_zone('America/Chicago').strftime('%I:%M:%S %p') }
           elsif @sort_type == 'Amount'
               @transactions_sorted = @transactions.sort_by { |transaction| transaction.item_quantity }
+          elsif @sort_type == 'Event'
+              @transactions_sorted = @transactions.sort_by { |transaction| transaction.event }
           end
 
           if @sort_dir == 'Z -> A'
@@ -174,7 +178,7 @@ class TransactionsController < ApplicationController
   end
 
   def transaction_params
-    params.require(:transaction).permit(:requestor_name, :requestor_email, :type_, :item_name, :item_quantity, :remind_date)
+    params.require(:transaction).permit(:requestor_name, :requestor_email, :type_, :item_name, :item_quantity, :remind_date, :event)
   end
 
 #  def log_params
