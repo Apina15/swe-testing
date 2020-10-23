@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 # add new views before others so they are parsed and routed properly
   get 'transactions/checkout', to:'transactions#checkout'
   post 'transactions/submit'
+  get 'transactions/showAllUserItems'
 
   resources :transactions do
    member do
