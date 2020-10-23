@@ -4,12 +4,30 @@
     <title>SweInventoryTracker</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #9f49f5">
+          <div class="container">
+            <a class="nav-item nav-link" href="/"><%= image_tag "SWELogo.png" ,width:'5%', height:'70%' %></a>
+            <a class="nav-item nav-link" href="/items"><button type="button" class="btn btn-dark">Inventory</button> </a>
+            <a class="nav-item nav-link" href="/users"><button type="button" class="btn btn-dark">Users</button> </a>
+            <a class="nav-item nav-link" href="/users/key"><button type="button" class="btn btn-dark">Keys</button> </a>
+            <a class="nav-item nav-link" href="/transactions"><button type="button" class="btn btn-dark">Transactions</button></a>
+            <a class="nav-item nav-link" href="/log"><button type="button" class="btn btn-dark">History</button> </a>
+            <a class="nav-item nav-link"><button type="button" class="btn btn-dark"><%= link_to("Logout", access_logout_path) %></button></a>
+          </div>
+        </nav>
+      </header>
+  <header class="site-header">
+    <nav class="nav-bar"
+  </header>
+
+  <div class="container">
     <% if !!flash[:errors] %>
       <% flash[:errors].each do |e| %>
         <p style="color: red"><%= e %> </p> <br/>
@@ -21,5 +39,6 @@
     <% end %>
 
     <%= yield %>
+    </div>
   </body>
 </html>

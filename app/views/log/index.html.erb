@@ -1,0 +1,48 @@
+<div class = "top-button">
+  <button type="button"><%= link_to("Back to Main Page", access_menu_path, :class => 'back-link') %></button>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col" align="center">
+      <div class="Titles">
+        History
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" align="center">
+      <button type="button" class="btn btn-dark" id="CheckOutButton"><%= link_to("Export to Spreadsheet", log_index_path(format: "xlsx")) %></button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card" style="margin-top:2%; width:100%; margin-left:0%;" align="center">
+        <div class="card-body">
+        <table class="listing" summary="Transaction Log">
+        <tr class="header">
+            <th style="padding:0 15px 0 0;">Check Out ID</th>
+            <th style="padding:0 15px 0 0;">Checked Out By</th>
+            <th style="padding:0 15px 0 0;">Check Out Email</th>
+            <th style="padding:0 15px 0 0;">Type</th>
+            <th style="padding:0 15px 0 0;">Item Name</th>
+            <th style="padding:0 15px 0 0;">Item Quantity</th>
+            <th style="padding:0 15px 0 0;">Check in Date</th>
+        </tr>
+        <% @log.each do |t| %>
+        <tr class="tableEntries">
+            <td style="padding:0 15px 0 0;"><%= t.id %></td>
+            <td style="padding:0 15px 0 0;"><%= t.requestor_name %></td>
+            <td style="padding:0 15px 0 0;"><%= t.requestor_email%></td>
+            <td style="padding:0 15px 0 0;"><%= t.type_%></td>
+            <td style="padding:0 15px 0 0;"><%= t.item_name%></td>
+            <td style="padding:0 15px 0 0;"><%= t.item_quantity%></td>
+            <td style="padding:0 15px 0 0;"><%= t.check_in%></td>
+        </tr>
+        <% end %>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

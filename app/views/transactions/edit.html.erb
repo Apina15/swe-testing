@@ -1,0 +1,24 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col" align="center">
+      <div class="Titles">
+        Check In Item
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" align="center">
+      <div class="card" style="margin-top:2%; width:50%; margin-left:0%;" align="center">
+        <div class="card-body">
+          <h1>Check In Item Confirmation Page!</h1>
+          <%= form_for(@transaction) do |f| %>
+          <p>Can you confirm that the item has been returned to its rightful place?</p>
+          <p class="reference-name">Check Out ID #<%= @transaction.id %></p>
+          <div class="form-buttons">
+            <%= f.submit("Check In Item") %>
+           </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>

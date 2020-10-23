@@ -24,6 +24,10 @@
       <th>Permission Level</th>
       <td><%= f.select :permissions, [0,1,2] %></td>
     </tr>
+    <tr>
+     <th>Key checked out</th>
+     <td><%= f.select :hasKey, [ ["Yes", 1], ["No", 0]] %></td>
+   </tr>
   </table>
 
   <div class = "form-buttons">

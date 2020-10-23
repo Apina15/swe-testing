@@ -21,14 +21,19 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-# gem 'mini_racer'
-
+#gem 'mini_racer'
+#gem 'libv8'
+# for exporting to excel
+gem 'axlsx'
+gem 'axlsx_rails'
+gem 'rubyzip'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
 # Bootstrap
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
+gem 'bootstrap_form'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

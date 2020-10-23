@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: 'Logs') do |sheet|
+  # this is the head row of your spreadsheet
+  sheet.add_row %w[id name email status item Quantity]
+
+  # each user is a row on your spreadsheet
+  @logs.each do |log|
+    sheet.add_row [log.id, log.requestor_name, log.requestor_email, log.type_, log.item_name, log.item_quantity]
+  end
+end

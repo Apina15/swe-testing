@@ -10,6 +10,15 @@
     <p>Sort By: <%= select_tag "sort_type", options_for_select(['Name', 'Description',
       'Total Stock', 'Available Stock'], @sort_type)%>
       <%= select_tag "sort_dir", options_for_select(['A -> Z', 'Z -> A'], @sort_dir)%>
+      <%= submit_tag("Sort") %>
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      <%= text_field_tag "search_tag"%>
       <%= submit_tag("Search") %></p>
   <% end %>
 
@@ -21,6 +30,7 @@
       <th>Total Stock</th>
       <th>Available Stock</th>
       <th>Merch</th>
+      <th>Options</th>
     </tr>
     <% @items_sorted.each do |item| %>
     <tr>
@@ -33,7 +43,7 @@
         <%= link_to("Details", item_path(item), :class => 'action show') %>
         <%= link_to("Edit", edit_item_path(item), :class => 'action edit') %>
         <%= link_to("Delete", delete_item_path(item), :class => 'action delete') %>
-        <%= link_to("Checkout", {:controller => 'checkout', :action => 'index', :id => item.id}, :class => 'action checkout') %>
+        <%= link_to("Checkout", {:controller => 'transactions', :action => 'checkout', :id => item.id}, :class => 'action checkout') %>
       </td>
     </tr>
     <% end %>

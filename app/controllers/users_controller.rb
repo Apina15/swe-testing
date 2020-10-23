@@ -1,11 +1,17 @@
 class UsersController < ApplicationController
-    
+
     before_action :confirmed_logged_in, :except => [:new, :create]
-    before_action :user_is_admin, :except => [:new, :create]
-  
+    before_action :user_is_admin, :except => [:new, :create,:will_checkout_or_return_key, :checkout_or_return_key]
+
   def index
-      @users = User.all
-      if (params[:sort_type] != nil)
+    @users = User.all
+    if ((params[:search_tag] != nil) && (params[:search_tag] != ""))
+      @users_first_name = User.where(first_name: params[:search_tag])
+      @users_last_name = User.where(last_name: params[:search_tag])
+      @users_permissions = User.where(permissions: params[:search_tag])
+      @users_sorted = [].concat(@users_first_name).concat(@users_last_name).concat(@users_permissions)
+      @users_sorted = @users_sorted.uniq
+    elsif (params[:sort_type] != nil)
         @sort_type = params[:sort_type]
         @sort_dir = params[:sort_dir]
         if @sort_type == 'First Name'
@@ -28,11 +34,11 @@ class UsersController < ApplicationController
         @users_sorted = @users
     end
   end
-  
+
   def new
       @user = User.new
   end
-  
+
   def create
     @admins = User.where(:permissions=>2)
     @user = User.new(user_params)
@@ -48,28 +54,33 @@ class UsersController < ApplicationController
       render('new')
     end
   end
-  
+
   def edit
       @user = User.find(params[:id])
   end
-  
+
   def show
       @user = User.find(params[:id])
   end
-  
+
   def update
     @user = User.find(params[:id])
     @perm = @user.permissions
-    if @user.update_attributes(user_params)
-      if @user.permissions > @perm
-        UserMailer.with(user: @user).authorized_email.deliver_now
-        flash[:notice] = "Authorization notification e-mail sent to #{@user.name} at #{@user.email}"
+    if User.sum(:hasKey) < 2 or user_params[:hasKey] == "0"
+      if @user.update_attributes(user_params)
+        if @user.permissions > @perm
+          UserMailer.with(user: @user).authorized_email.deliver_now
+          flash[:notice] = "Authorization notification e-mail sent to #{@user.name} at #{@user.email}"
+          redirect_to(users_path)
+        else
+        flash[:notice] = "User account updated successfully."
         redirect_to(users_path)
+        end
       else
-      flash[:notice] = 'User account updated successfully.'
-      redirect_to(users_path)
+        render('edit')
       end
     else
+      flash[:notice] = "Cannot update key checked out because too many keys are checked out"
       render('edit')
     end
   end
@@ -77,14 +88,14 @@ class UsersController < ApplicationController
   def delete
     @user = User.find(params[:id])
   end
-  
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy
     flash[:notice] = "The User has been removed."
     redirect_to(users_path)
   end
-  
+
   def will_checkout_or_return_key
     @user = User.find_by_id(session[:user_id])
   end
@@ -93,11 +104,13 @@ class UsersController < ApplicationController
     @user = User.find_by_id(session[:user_id])
     #@user = User.find(params[:id])
     if params[:commit] == 'Checkout Key'
-      if @user.hasKey == 0
+      if @user.hasKey == 0 and User.sum(:hasKey) < 2
         User.update(session[:user_id], :hasKey => 1)
         flash[:notice] = "You checked out a key!"
       elsif @user.hasKey == 1
         flash[:notice] = "You already have a key checked out!"
+      elsif User.sum(:hasKey) > 1
+        flash[:notice] = "There are no keys available to checkout"
       end
     elsif params[:commit] == 'Return Key'
       if @user.hasKey == 1
@@ -107,7 +120,19 @@ class UsersController < ApplicationController
         flash[:notice] = "You have no key to return!"
       end
     end
-    redirect_to(access_menu_path)
+    redirect_to(root_path)
+  end
+
+  def manage
+    @user = User.find_by_id(session[:user_id])
+  end
+
+  def manage_update
+    @user = User.find_by_id(session[:user_id])
+    if @user.update_attributes(user_params)
+      flash[:notice] = 'Account details updated successfully.'
+      redirect_to(access_menu_path)
+    end
   end
 
   private
@@ -119,8 +144,9 @@ class UsersController < ApplicationController
       :last_name,
       :email,
       :permissions,
-      :password
+      :password,
+      :hasKey
     )
   end
-  
+
 end

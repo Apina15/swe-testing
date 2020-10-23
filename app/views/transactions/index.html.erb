@@ -1,0 +1,50 @@
+<div class = "top-button">
+  <button type="button"><%= link_to("Back to Main Page", access_menu_path, :class => 'back-link') %></button>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col" align="center">
+      <div class="Titles">
+        Check In/Out
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="card" style="margin-top:2%; width:100%; margin-left:0%;" align="center">
+        <div class="card-body">
+        <table class="listing" summary="Transaction List">
+        <tr class="header">
+            <th style="padding:0 15px 0 0;">Check Out ID</th>
+            <th style="padding:0 15px 0 0;">Checked Out By</th>
+            <th style="padding:0 15px 0 0;">Item</th>
+            <th style="padding:0 15px 0 0;">Quantity</th>
+            <th style="padding:0 15px 0 0;">Checkout date</th>
+            <th style="padding:0 15px 0 0;">Status</th>
+            <th style="padding:0 15px 0 0;">Details</th>
+        </tr>
+        <% @transactions.each do |t| %>
+            <% if t.type_ == "Checked In" %>
+                <% next %>
+            <% end %>
+        <tr class="tableEntries">
+            <td style="padding:0 15px 0 0;"><%= t.id %></td>
+            <td style="padding:0 15px 0 0;"><%= t.requestor_name %></td>
+            <td style="padding:0 15px 0 0;"><%= t.item_name %></td>
+            <td style="padding:0 15px 0 0;"><%= t.item_quantity %></td>
+            <td style="padding:0 15px 0 0;"><%= t.created_at %></td>
+            <td style="padding:0 15px 0 0;"><%= t.type_ %></td>
+            <td class="actions" style="padding:0 15px 0 0;">
+              <button type="button" ><%= link_to("View Details", transaction_path(t), :class => 'action show') %></button>
+              <button type="button" ><%= link_to("Return", edit_transaction_path(t), :class => 'action edit') %></button>
+            </td>
+        </tr>
+        <% end %>
+    </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

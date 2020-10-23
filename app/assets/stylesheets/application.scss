@@ -17,6 +17,7 @@
 @import "bootstrap";
 
 body {
+  background-color: #f1e7fe;
 }
 
 h2 {
@@ -38,6 +39,37 @@ th, td, tr {
   border: 1px solid black;
 }
 
+th {
+  color: black;
+  font-size: 15pt;
+}
+
 .top-button {
   margin: 20px 20px 0px 20px
+}
+
+.header{
+    color:white;
+    font-size: 18pt;
+}
+
+.card{
+    margin-left:25%; //centering card element on page
+    width:50%;
+}
+.card-headers{
+    font-size: 50px;
+    margin-top: 3%;
+    margin-bottom:10%;
+}
+
+.btn-dark {
+    margin: 10px 10px 10px 10px;
+    color:white;
+    background-color:#562B81;
+}
+
+.Titles{
+    font-size:55pt;
+    color:black;
 }

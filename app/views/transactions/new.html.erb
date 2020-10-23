@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col" align="center">
+      <div class="Titles">
+        Check Out Item
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" align="center">
+      <div class="card" style="margin-top:2%; width:50%; margin-left:0%;">
+        <div class="card-body">
+          <%= bootstrap_form_for(@transaction, :url => transactions_path, :method => 'post') do |f| %>
+            <% if @transaction.errors.any? %>
+              <div class="error_messages">
+                <h2> Form is invalid </h2>
+                <ul>
+                  <% @transaction.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <div class="field">
+              <p style="margin-top: 10px;"><%= f.text_field :requestor_name, placeholder:"Name" %></p>
+              <p style="margin-top: 10px;"><%= f.text_field :requestor_email , placeholder:"Email" %></p>
+              <p style="margin-top: 10px;"><%= f.text_field :item_name ,placeholder:"Item Name" %></p>
+              <p style="margin-top: 10px;"><%= f.number_field :item_quantity, min: 1, placeholder:"Quantity" %></p>
+            </div>
+            <div class="form-buttons">
+              <%= f.submit "Check Out Item" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

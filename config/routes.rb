@@ -7,10 +7,12 @@ Rails.application.routes.draw do
   post 'access/attempt_login'
   get 'access/logout'
   get 'access/unauthorized'
-  
+
   resources :users, :except => [:show] do
       member do
           get :delete
+          get :manage
+          patch :manage_update
         end
       end
 
@@ -22,6 +24,24 @@ Rails.application.routes.draw do
       get :delete
     end
   end
+
+# add new views before others so they are parsed and routed properly
+  get 'transactions/checkout', to:'transactions#checkout'
+  post 'transactions/submit'
+
+  resources :transactions do
+   member do
+     get :delete
+   end
+  end
+  #Manual so it recognizes new views
+  #get 'transactions', to: 'transactions#index'
+  #get 'transactions/show'
+  #get 'transactions/new'
+  #get 'transactions/edit'
+  #get 'transactions/delete'
+
+  resources :log, only: [:index]
 
   get 'checkout', to: 'checkout#index'
   post 'checkout/submit'
@@ -37,7 +57,7 @@ Rails.application.routes.draw do
 
   get 'users/key', to: 'users#will_checkout_or_return_key'
   post 'users/key', to: 'users#checkout_or_return_key'
-  
+
   #get 'items/index'
   #get 'items/show'
   #get 'items/new'
