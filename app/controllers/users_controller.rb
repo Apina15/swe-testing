@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 
-    before_action :confirmed_logged_in, :except => [:new, :create]
-    before_action :user_is_admin, :except => [:new, :create,:will_checkout_or_return_key, :checkout_or_return_key]
+  before_action :confirmed_logged_in, :except => [:new, :create]
+  before_action :user_is_admin, :except => [:new, :create,:will_checkout_or_return_key, :checkout_or_return_key]
+  layout :get_user_layout, :except => [:new, :create]
 
   def index
     @users = User.all
@@ -74,7 +75,7 @@ class UsersController < ApplicationController
           redirect_to(users_path)
         else
         flash[:notice] = "User account updated successfully."
-        redirect_to(users_path)
+        redirect_to(user_path(@user))
         end
       else
         render('edit')
@@ -149,4 +150,12 @@ class UsersController < ApplicationController
     )
   end
 
+  def get_user_layout
+    permissions = User.find(session[:user_id]).permissions
+    if permissions == 2
+        "admin"
+    elsif permissions == 1
+        "user"
+    end
+  end
 end

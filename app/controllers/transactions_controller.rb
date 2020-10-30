@@ -7,8 +7,15 @@ REGEX_PATTERN = /^(.+)@(.+)$/.freeze
 
 class TransactionsController < ApplicationController
 #  before_action :authorize, only: %i[create edit update delete destroy show new index]
+  layout :get_user_layout
+
   def index
-    @transactions = Transaction.sorted
+    user = User.find(session[:user_id])
+    if (user.permissions < 2)
+      @transactions = Transaction.where(:requestor_email => user.email)
+    else
+      @transactions = Transaction.sorted
+    end
   end
 
   def show
@@ -189,5 +196,14 @@ class TransactionsController < ApplicationController
   # link to article: https://blog.mailtrap.io/rails-email-validation/
   def is_email_valid?(email)
     email =~ REGEX_PATTERN
+  end
+
+  def get_user_layout
+    permissions = User.find(session[:user_id]).permissions
+    if permissions == 2
+      "admin"
+    elsif permissions == 1
+      "user"
+    end
   end
 end

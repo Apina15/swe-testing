@@ -2,6 +2,7 @@ class ReturnController < ApplicationController
 
     before_action :confirmed_logged_in
     before_action :user_has_permissions
+    layout :get_user_layout
 
     def index
         @checkout = Checkout.find(params[:id])
@@ -51,5 +52,14 @@ class ReturnController < ApplicationController
     def index_merch
         @checkout = Checkout.find(params[:id])
         @item = Item.find(@checkout.item_id)
+    end
+
+    def get_user_layout
+      permissions = User.find(session[:user_id]).permissions
+      if permissions == 2
+        "admin"
+      elsif permissions == 1
+        "user"
+      end
     end
 end

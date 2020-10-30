@@ -24,5 +24,4 @@ class ApplicationController < ActionController::Base
             redirect_to(access_user_menu_url)
         end
     end
-    
 end
