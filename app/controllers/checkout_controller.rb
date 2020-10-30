@@ -2,6 +2,7 @@ class CheckoutController < ApplicationController
 
     before_action :confirmed_logged_in
     before_action :user_has_permissions
+    layout :get_user_layout
 
     def index
         @item = Item.find(params[:id])
@@ -126,5 +127,14 @@ class CheckoutController < ApplicationController
             flash[:notice] = "Item checked out."
             redirect_to({:controller => 'items', :action => 'index'})
         end
+    end
+
+    def get_user_layout
+      permissions = User.find(session[:user_id]).permissions
+      if permissions == 2
+        "admin"
+      elsif permissions == 1
+        "user"
+      end
     end
 end

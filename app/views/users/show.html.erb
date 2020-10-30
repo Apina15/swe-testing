@@ -1,36 +1,35 @@
-<%= link_to("Back to Users Page", items_path, :class => 'back-link') %>
+<div class="top-button">
+  <button type="button"><%= link_to("Back to User List", users_path, :class => 'back-link') %></button>
+</div>
 
-<div class = "items edit">
-  <h1>Update item</h1>
+<div class = "container">
+  <h1>User Info</h1>
 
-  <%= form_for(@item) do |f| %>
+  <button><%= link_to("Edit user", edit_user_path(@user), :class => 'edit-link') %></button>
 
-  <table summary = "item form fields">
+  <table class="table" summary = "user form fields">
     <tr>
-      <th>Item Name</th>
-      <td><%= f.text_field(:name) %></td>
+      <th>First Name</th>
+      <td><%= @user.first_name %></td>
     </tr>
     <tr>
-      <th>Description</th>
-      <td><%= f.text_field(:description) %></td>
+      <th>Last Name</th>
+      <td><%= @user.last_name %></td>
     </tr>
     <tr>
-      <th>Total Stock</th>
-      <td><%= f.text_field(:total_stock) %></td>
+      <th>Email</th>
+      <td><%= @user.email %></td>
     </tr>
     <tr>
-      <th>Available Stock</th>
-      <td><%= f.text_field(:avail_stock) %></td>
+      <th>Permission Level</th>
+      <td><%= @user.permissions %></td>
     </tr>
     <tr>
-      <th>Location</th>
-      <td><%= f.text_field(:location) %></td>
-    </tr>
+     <th>Key checked out</th>
+     <td><%= @user.hasKey %></td>
+   </tr>
   </table>
 
-  <div class = "form-buttons">
-    <%= f.submit("Update item") %>
-  </div>
+  <button><%= link_to("Delete user", delete_user_path(@user), :class => 'delete-link') %></button>
 
-  <% end %>
 </div>

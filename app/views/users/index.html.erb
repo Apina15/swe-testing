@@ -1,9 +1,12 @@
-<div class = "top-button">
-  <button type="button"><%= link_to("Back to Main Page", access_menu_path, :class => 'back-link') %></button>
-</div>
 <div class = "container">
 
-  <h1>Users</h1>
+  <div class="row">
+  <div class="col" align="center">
+    <div class="Titles">
+      User List
+    </div>
+  </div>
+  </div>
 
   <%= link_to("Add New user", new_user_path, :class=> 'action new') %>
 
@@ -23,28 +26,35 @@
       <%= submit_tag("Search") %></p>
   <% end %>
 
-  <table class = "table" summary="user List">
-    <tr class = "header">
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Permissions</th>
-      <th>Amount of rented items</th>
-      <th>Key checkout out</th>
-      <th>Options</th>
-    </tr>
-    <% @users_sorted.each do |user| %>
-    <tr>
-      <td><%= user.first_name %></td>
-      <td><%= user.last_name %></td>
-      <td><%= user.permissions %></td>
-      <td><%= user.item_ids.length %></td>
-      <td><%= user.hasKey == 0 ? 'No' : 'Yes' %></td>
-      <td>
-        <%= link_to("Edit", edit_user_path(user), :class => 'action edit') %>
-        <%= link_to("Show Items", {:controller => 'transactions', :action => "showAllUserItems", :id => user.id}) %>
-        <%= link_to("Delete", delete_user_path(user), :class => 'action delete') %>
-      </td>
-    </tr>
-    <% end %>
-  </table>
+  <div class="row">
+    <div class="col">
+      <div class="card" style="margin-top:2%; width:100%; margin-left:0%;" align="center">
+        <div class="card-body">
+        <table class = "table" summary="user List">
+        <tr class = "header">
+          <th style="padding:0 15px 0 0;">First Name</th>
+          <th style="padding:0 15px 0 0;">Last Name</th>
+          <th style="padding:0 15px 0 0;">Permissions</th>
+          <th style="padding:0 15px 0 0;">Amount of rented items</th>
+          <th style="padding:0 15px 0 0;">Key checkout out</th>
+          <th style="padding:0 15px 0 0;">Options</th>
+          </tr>
+        <% @users_sorted.each do |user| %>
+        <tr>
+          <td style="padding:0 15px 0 0;"><%= user.first_name %></td>
+          <td style="padding:0 15px 0 0;"><%= user.last_name %></td>
+          <td style="padding:0 15px 0 0;"><%= user.permissions %></td>
+          <td style="padding:0 15px 0 0;"><%= user.item_ids.length %></td>
+          <td style="padding:0 15px 0 0;"><%= user.hasKey == 0 ? 'No' : 'Yes' %></td>
+          <td class="actions" style="padding:0 15px 0 0;">
+            <button type="button" ><%= link_to("View Details", user_path(user), :class => 'action show') %></button>
+            <button type="button" ><%= link_to("Show Items", {:controller => 'transactions', :action => "showAllUserItems", :id => user.id}) %></button>
+          </td>
+        </tr>
+        <% end %>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

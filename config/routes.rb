@@ -1,22 +1,18 @@
 Rails.application.routes.draw do
-  root 'access#menu'
-  #get 'admin', : to => 'access#menu"
-  get 'access/menu'
-  get 'access/user_menu'
+  root 'items#index'
+
   get 'access/login'
   post 'access/attempt_login'
   get 'access/logout'
   get 'access/unauthorized'
 
-  resources :users, :except => [:show] do
+  resources :users do
       member do
           get :delete
           get :manage
           patch :manage_update
         end
       end
-
-  #root 'items#index'
 
   # get all the urls, including delete
   resources :items do
