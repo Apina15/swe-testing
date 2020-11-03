@@ -3,7 +3,14 @@
 </div>
 
 <div class = "container">
-  <h1>Edit User</h1>
+  
+  <div class="row">
+  <div class="col" align="center">
+    <div class="Titles">
+      Edit User
+    </div>
+  </div>
+  </div>
 
   <%= form_for(@user) do |f| %>
 
@@ -30,8 +37,8 @@
    </tr>
   </table>
 
-  <div class = "form-buttons">
-    <%= f.submit("Update user") %>
+  <div class="form-buttons" align="center">
+    <%= f.submit("Submit") %>
   </div>
 
   <% end %>

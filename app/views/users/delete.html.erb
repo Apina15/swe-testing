@@ -1,20 +1,29 @@
-<div class="top-button">
-  <button type="button"><%= link_to("Back to User Page", user_path(@user), :class => 'back-link') %></button>
-</div>
+<div class="container-fluid">
 
-<div class = "container">
-  <h1> Delete user? </h1>
-
-  <%= form_for(@user, :method => 'delete') do |f| %>
-
-  <p>Are you sure you want to delete this user?</p>
-
-  <p> <%= f.object.first_name %> <%= f.object.last_name %></p>
-
-  <div class = "form-buttons">
-    <%= f.submit("Delete user") %>
+  <div class = "top-button">
+    <button type="button"><%= link_to("Back to User Page", user_path(@user), :class => 'back-link') %></button>
   </div>
 
-  <% end %>
+  <div class="row">
+    <div class="col" align="center">
+      <div class="Titles">
+        Delete User
+      </div>
+    </div>
+  </div>
 
-</div>
+  <div class="row">
+    <div class="col" align="center">
+      <div class="card" style="margin-top:2%; width:50%; margin-left:0%;" align="center">
+        <div class="card-body">
+          <%= form_for(@user, :method => 'delete') do |f| %>
+          <h1><%= f.object.first_name %> <%= f.object.last_name %></h1>
+          <p>Are you sure you want to delete this user?</p>
+          <div class="form-buttons">
+            <%= f.submit("Submit") %>
+           </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>

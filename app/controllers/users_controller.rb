@@ -23,6 +23,8 @@ class UsersController < ApplicationController
           @users_sorted = @users.sort_by { |user| user.permissions }
         elsif @sort_type == 'Amount of Rented Items'
           @users_sorted = @users.sort_by { |user| user.item_ids.length }
+        elsif @sort_type == 'Has Key'
+          @users_sorted = @users.sort_by { |user| user.hasKey }
         end
 
         if @sort_dir == 'Z -> A'
@@ -32,7 +34,7 @@ class UsersController < ApplicationController
     else
         @sort_type = 'First Name'
         @sort_dir = 'A -> Z'
-        @users_sorted = @users
+        @users_sorted = @users.sort_by { |user| user.first_name }
     end
   end
 
@@ -51,7 +53,6 @@ class UsersController < ApplicationController
       flash[:notice] = 'Account Created. You will receive an e-mail shortly. Please await authorization before using the site.'
       redirect_to(access_login_path)
     else
-      flash[:errors] = @user.errors.full_messages
       render('new')
     end
   end
@@ -71,17 +72,15 @@ class UsersController < ApplicationController
       if @user.update_attributes(user_params)
         if @user.permissions > @perm
           UserMailer.with(user: @user).authorized_email.deliver_now
-          flash[:notice] = "Authorization notification e-mail sent to #{@user.name} at #{@user.email}"
           redirect_to(users_path)
         else
-        flash[:notice] = "User account updated successfully."
         redirect_to(user_path(@user))
         end
       else
         render('edit')
       end
     else
-      flash[:notice] = "Cannot update key checked out because too many keys are checked out"
+      flash[:notice] = "Sorry, there are no keys available to checkout."
       render('edit')
     end
   end
@@ -93,7 +92,6 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    flash[:notice] = "The User has been removed."
     redirect_to(users_path)
   end
 
@@ -107,21 +105,12 @@ class UsersController < ApplicationController
     if params[:commit] == 'Checkout Key'
       if @user.hasKey == 0 and User.sum(:hasKey) < 2
         User.update(session[:user_id], :hasKey => 1)
-        flash[:notice] = "You checked out a key!"
       elsif @user.hasKey == 1
         flash[:notice] = "You already have a key checked out!"
       elsif User.sum(:hasKey) > 1
-        flash[:notice] = "There are no keys available to checkout"
-      end
-    elsif params[:commit] == 'Return Key'
-      if @user.hasKey == 1
-        User.update(session[:user_id], :hasKey => 0)
-        flash[:notice] = "You returned a key!"
-      elsif @user.hasKey == 0
-        flash[:notice] = "You have no key to return!"
+        flash[:notice] = "Sorry, there are no keys available to checkout."
       end
     end
-    redirect_to(root_path)
   end
 
   def manage
@@ -131,7 +120,6 @@ class UsersController < ApplicationController
   def manage_update
     @user = User.find_by_id(session[:user_id])
     if @user.update_attributes(user_params)
-      flash[:notice] = 'Account details updated successfully.'
       redirect_to(access_menu_path)
     end
   end

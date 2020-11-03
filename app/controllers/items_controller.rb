@@ -11,8 +11,14 @@ class ItemsController < ApplicationController
       @items_desc = Item.where(description: params[:search_tag])
       @items_total = Item.where(total_stock: params[:search_tag])
       @items_avail = Item.where(avail_stock: params[:search_tag])
-      @items_sorted = [].concat(@items_name).concat(@items_desc).concat(@items_total).concat(@items_avail)
+      @items_merch = Item.where(merch: params[:search_tag])
+      @items_sorted = [].concat(@items_name)
+                        .concat(@items_desc)
+                        .concat(@items_total)
+                        .concat(@items_avail)
+                        .concat(@items_merch)
       @items_sorted = @items_sorted.uniq
+      @items_sorted = @items_sorted.sort_by { |item| item.name }
     elsif (params[:sort_type] != nil)
       @sort_type = params[:sort_type]
       @sort_dir = params[:sort_dir]
@@ -24,6 +30,8 @@ class ItemsController < ApplicationController
         @items_sorted = @items.sort_by { |item| item.total_stock }
       elsif @sort_type == 'Available Stock'
         @items_sorted = @items.sort_by { |item| item.avail_stock }
+      elsif @sort_type == 'Merch'
+        @items_sorted = @items.sort_by { |item| item.merch }
       end
 
       if @sort_dir == 'Z -> A'
@@ -33,7 +41,7 @@ class ItemsController < ApplicationController
     else
       @sort_type = 'Name'
       @sort_dir = 'A -> Z'
-      @items_sorted = @items
+      @items_sorted = @items.sort_by { |item| item.name }
     end
   end
 
@@ -48,14 +56,12 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(subject_params)
     if @item.save
-      flash[:notice] = "Item created successfully."
       redirect_to(items_path)
     else
       out = ''
       @item.errors.full_messages.each do |msg|
         out = out + ' ' + msg
       end
-      flash[:notice] = out
       render('new')
     end
   end
@@ -67,14 +73,12 @@ class ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     if @item.update_attributes(subject_params)
-      flash[:notice] = "Item \"#{@item.name}\" updated successfully."
       redirect_to(item_path(@item))
     else
       out = ''
       @item.errors.full_messages.each do |msg|
         out = out + ' ' + msg
       end
-      flash[:notice] = out
       render('edit')
     end
   end
@@ -86,7 +90,6 @@ class ItemsController < ApplicationController
   def destroy
     @item = Item.find(params[:id])
     @item.destroy
-    flash[:notice] = "Item '#{@item.name}' destroyed successfully."
     redirect_to(items_path)
   end
 

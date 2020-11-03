@@ -2,36 +2,71 @@
   <button type="button"><%= link_to("Back to Users Page", users_path, :class => 'back-link') %></button>
 </div>
 
-<div class = "container">
-  <h1><%= @user.first_name %> <%= @user.last_name %>'s Items</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col" align="center">
+      <div class="Titles">
+        <%= @user.first_name %> <%= @user.last_name %>'s Items
+      </div>
+    </div>
+  </div>
 
-  <%= form_tag({:action => 'showAllUserItems', :id => @user.id}, :method => :get) do %>
-    <p>Sort By: <%= select_tag "sort_type", options_for_select(['Item Name',
-      'Amount', 'Checkout Date', 'Event'], @sort_type)%>
+  <%= form_tag({:action => 'showAllUserItems'}, :method => :get) do %>
+    <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+      Sort By: <%= select_tag "sort_type", options_for_select(['Person', 'Item Name',
+      'Item Amount', 'Event', 'Checkout Date', 'Status'], @sort_type)%>
       <%= select_tag "sort_dir", options_for_select(['A -> Z', 'Z -> A'], @sort_dir)%>
+      <%= submit_tag("Sort") %>
+
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+      <%= text_field_tag "search_tag"%>
       <%= hidden_field_tag "id", @user.id %>
       <%= submit_tag("Search") %></p>
   <% end %>
 
-  <table class = "table" summary=" My Checked out item List">
-  <tr class = "header">
-    <th>User</th>
-    <th>Item Name</th>
-    <th>Amount</th>
-    <th>Event</th>
-    <th>Checkout Date</th>
-    <th>Status</th>
-  </tr>
-  <% @transactions_sorted.each do |transaction| %>
-  <tr>
-    <td><%= transaction.requestor_name %></td>
-    <td><%= transaction.item_name %></td>
-    <td><%= transaction.item_quantity %></td>
-    <td><%= transaction.event %></td>
-    <td><%= transaction.updated_at %></td>
-    <td><%= transaction.type_ %></td>
-  </tr>
-  <% end %>
-</table>
-</div>
+  <div class="row">
+    <div class="col">
+      <div class="card" style="margin-top:2%; width:100%; margin-left:0%;" align="center">
+        <div class="card-body">
+        <table class="listing" summary="Transaction List">
+        <tr class="header">
+            <th style="padding:0 15px 0 0;">Checked Out By</th>
+            <th style="padding:0 15px 0 0;">Item</th>
+            <th style="padding:0 15px 0 0;">Quantity</th>
+            <th style="padding:0 15px 0 0;">Event</th>
+            <th style="padding:0 15px 0 0;">Checkout date</th>
+            <th style="padding:0 15px 0 0;">Status</th>
+            <th style="padding:0 15px 0 0;">Details</th>
+        </tr>
+        <% @transactions_sorted.each do |t| %>
+            <% if t.type_ == "Checked In" %>
+                <% next %>
+            <% end %>
+        <tr class="tableEntries">
+            <td style="padding:0 15px 0 0;"><%= t.requestor_name %></td>
+            <td style="padding:0 15px 0 0;"><%= t.item_name %></td>
+            <td style="padding:0 15px 0 0;"><%= t.item_quantity %></td>
+            <td style="padding:0 15px 0 0;"><%= t.event %></td>
+            <td style="padding:0 15px 0 0;"><%= t.created_at %></td>
+            <td style="padding:0 15px 0 0;"><%= t.type_ %></td>
+            <td class="actions" style="padding:0 15px 0 0;">
+              <button type="button" ><%= link_to("View Details", transaction_path(t), :class => 'action show') %></button>
+              <button type="button" ><%= link_to("Return", edit_transaction_path(t), :class => 'action edit') %></button>
+            </td>
+        </tr>
+        <% end %>
+    </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

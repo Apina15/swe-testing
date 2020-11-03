@@ -14,17 +14,23 @@
   </div>
 
   <%= form_tag({:action => 'index'}, :method => :get) do %>
-    <p>Sort By: <%= select_tag "sort_type", options_for_select(['Name', 'Description',
-      'Total Stock', 'Available Stock'], @sort_type)%>
+    <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    
+      Sort By: <%= select_tag "sort_type", options_for_select(['Person', 'Email', 'Item Name',
+      'Item Amount', 'Event', 'Check in Date', 'Status'], @sort_type)%>
       <%= select_tag "sort_dir", options_for_select(['A -> Z', 'Z -> A'], @sort_dir)%>
       <%= submit_tag("Sort") %>
-      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+
       <%= text_field_tag "search_tag"%>
       <%= submit_tag("Search") %></p>
   <% end %>
@@ -35,25 +41,23 @@
         <div class="card-body">
         <table class="listing" summary="Transaction Log">
         <tr class="header">
-            <th style="padding:0 15px 0 0;">Check Out ID</th>
             <th style="padding:0 15px 0 0;">Checked Out By</th>
             <th style="padding:0 15px 0 0;">Check Out Email</th>
-            <th style="padding:0 15px 0 0;">Type</th>
-            <th style="padding:0 15px 0 0;">Item Name</th>
-            <th style="padding:0 15px 0 0;">Item Quantity</th>
+            <th style="padding:0 15px 0 0;">Item</th>
+            <th style="padding:0 15px 0 0;">Quantity</th>
             <th style="padding:0 15px 0 0;">Event</th>
             <th style="padding:0 15px 0 0;">Check in Date</th>
+            <th style="padding:0 15px 0 0;">Status</th>
         </tr>
-        <% @log.each do |t| %>
+        <% @log_sorted.each do |t| %>
         <tr class="tableEntries">
-            <td style="padding:0 15px 0 0;"><%= t.id %></td>
             <td style="padding:0 15px 0 0;"><%= t.requestor_name %></td>
             <td style="padding:0 15px 0 0;"><%= t.requestor_email%></td>
-            <td style="padding:0 15px 0 0;"><%= t.type_%></td>
             <td style="padding:0 15px 0 0;"><%= t.item_name%></td>
             <td style="padding:0 15px 0 0;"><%= t.item_quantity%></td>
             <td style="padding:0 15px 0 0;"><%= t.event%></td>
             <td style="padding:0 15px 0 0;"><%= t.check_in%></td>
+            <td style="padding:0 15px 0 0;"><%= t.type_%></td>
         </tr>
         <% end %>
         </table>

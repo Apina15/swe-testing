@@ -6,11 +6,94 @@ class LogController < ApplicationController
   def index
     user = User.find(session[:user_id])
     if (user.permissions < 2)
-      @log = Log.where(:requestor_email => user.email)
+      @log = Log.where(:requestor_email => user.email).sorted
+      if ((params[:search_tag] != nil) && (params[:search_tag] != ""))
+        @log_person = Log.where(requestor_name: params[:search_tag])
+        @log_item = Log.where(item_name: params[:search_tag])
+        @log_amount = Log.where(item_quantity: params[:search_tag])
+        @log_event = Log.where(event: params[:search_tag])
+        @log_created = Log.where(created_at: params[:search_tag])
+        @log_status = Log.where(type_: params[:search_tag])
+        @log_sorted = [].concat(@log_person)
+                        .concat(@log_item)
+                        .concat(@log_amount)
+                        .concat(@log_event)
+                        .concat(@log_created)
+                        .concat(@log_status)
+        @log_sorted = @log_sorted.uniq
+      elsif (params[:sort_type] != nil)
+        @sort_type = params[:sort_type]
+        @sort_dir = params[:sort_dir]
+        if @sort_type == 'Person'
+          @log_sorted = @log.sort_by { |log| log.requestor_name }
+        elsif @sort_type == 'Email'
+          @log_sorted = @log.sort_by { |log| log.requestor_email }
+        elsif @sort_type == 'Item Name'
+          @log_sorted = @log.sort_by { |log| log.item_name }
+        elsif @sort_type == 'Item Amount'
+          @log_sorted = @log.sort_by { |log| log.item_quantity }
+        elsif @sort_type == 'Event'
+          @log_sorted = @log.sort_by { |log| log.event }
+        elsif @sort_type == 'Check in Date'
+          @log_sorted = @log.sort_by { |log| log.check_in }
+        elsif @sort_type == 'Status'
+          @log_sorted = @log.sort_by { |log| log.type_ }
+        end
+
+        if @sort_dir == 'Z -> A'
+          @log_sorted = @log_sorted.reverse
+        end
+      else
+        @sort_type = 'Check in Date'
+        @sort_dir = 'A -> Z'
+        @log_sorted = @log
+      end
     else
       @log = Log.sorted
+      if ((params[:search_tag] != nil) && (params[:search_tag] != ""))
+        @log_person = Log.where(requestor_name: params[:search_tag])
+        @log_item = Log.where(item_name: params[:search_tag])
+        @log_amount = Log.where(item_quantity: params[:search_tag])
+        @log_event = Log.where(event: params[:search_tag])
+        @log_created = Log.where(created_at: params[:search_tag])
+        @log_status = Log.where(type_: params[:search_tag])
+        @log_sorted = [].concat(@log_person)
+                        .concat(@log_item)
+                        .concat(@log_amount)
+                        .concat(@log_event)
+                        .concat(@log_created)
+                        .concat(@log_status)
+        @log_sorted = @log_sorted.uniq
+      elsif (params[:sort_type] != nil)
+        @sort_type = params[:sort_type]
+        @sort_dir = params[:sort_dir]
+        if @sort_type == 'Person'
+          @log_sorted = @log.sort_by { |log| log.requestor_name }
+        elsif @sort_type == 'Email'
+          @log_sorted = @log.sort_by { |log| log.requestor_email }
+        elsif @sort_type == 'Item Name'
+          @log_sorted = @log.sort_by { |log| log.item_name }
+        elsif @sort_type == 'Item Amount'
+          @log_sorted = @log.sort_by { |log| log.item_quantity }
+        elsif @sort_type == 'Event'
+          @log_sorted = @log.sort_by { |log| log.event }
+        elsif @sort_type == 'Check in Date'
+          @log_sorted = @log.sort_by { |log| log.check_in }
+        elsif @sort_type == 'Status'
+          @log_sorted = @log.sort_by { |log| log.type_ }
+        end
+
+        if @sort_dir == 'Z -> A'
+          @log_sorted = @log_sorted.reverse
+        end
+      else
+        @sort_type = 'Check in Date'
+        @sort_dir = 'A -> Z'
+        @log_sorted = @log
+      end
     end
-    @logs = Log.all
+
+    @logs = @log_sorted
     respond_to do |format|
       format.xlsx do
         response.headers[

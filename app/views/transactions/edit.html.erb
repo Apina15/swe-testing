@@ -16,9 +16,8 @@
           <h1>Check In Item Confirmation Page!</h1>
           <%= form_for(@transaction) do |f| %>
           <p>Can you confirm that the item has been returned to its rightful place?</p>
-          <p class="reference-name">Check Out ID #<%= @transaction.id %></p>
           <div class="form-buttons">
-            <%= f.submit("Check In Item") %>
+            <%= f.submit("Submit") %>
            </div>
           <% end %>
         </div>

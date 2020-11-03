@@ -3,7 +3,14 @@
 </div>
 
 <div class = "container">
-  <h1>Update Item</h1>
+
+  <div class="row">
+  <div class="col" align="center">
+    <div class="Titles">
+      Update Item
+    </div>
+  </div>
+  </div>
 
   <%= form_for(@item) do |f| %>
 
@@ -33,6 +40,8 @@
       <td><%= f.select :merch, ['No', 'Yes'] %></td>
     </tr>
   </table>
-<%= f.submit("Update item") %>
+  <div class="form-buttons" align="center">
+  <%= f.submit("Submit") %>
+  </div>
   <% end %>
 </div>
