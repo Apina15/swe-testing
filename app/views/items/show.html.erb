@@ -2,10 +2,15 @@
   <button type="button"><%= link_to("Back to Inventory Page", items_path, :class => 'back-link') %></button>
 </div>
 
-<div class = "container">
-  <h1>Item Info</h1>
+<div class = "container">\
 
-  <button><%= link_to("Edit item", edit_item_path(@item), :class => 'edit-link') %></button>
+  <div class="row">
+  <div class="col" align="center">
+    <div class="Titles">
+      Item Info
+    </div>
+  </div>
+  </div>
 
   <table class="table" summary = "item details">
     <tr>
@@ -34,5 +39,8 @@
     </tr>
   </table>
 
+  <div class="form-buttons" align="center">
+  <button><%= link_to("Edit item", edit_item_path(@item), :class => 'edit-link') %></button>
   <button><%= link_to("Delete item", delete_item_path(@item), :class => 'delete-link') %></button>
+  </div>
 </div>

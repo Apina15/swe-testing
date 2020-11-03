@@ -12,7 +12,7 @@
 
   <%= form_tag({:action => 'index'}, :method => :get) do %>
     <p>Sort By: <%= select_tag "sort_type", options_for_select(['First Name', 'Last Name',
-      'Permissions', 'Amount of Rented Items'], @sort_type)%>
+      'Permissions', 'Amount of Rented Items', 'Has Key'], @sort_type)%>
       <%= select_tag "sort_dir", options_for_select(['A -> Z', 'Z -> A'], @sort_dir)%>
       <%= submit_tag("Sort") %>
       &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -36,7 +36,7 @@
           <th style="padding:0 15px 0 0;">Last Name</th>
           <th style="padding:0 15px 0 0;">Permissions</th>
           <th style="padding:0 15px 0 0;">Amount of rented items</th>
-          <th style="padding:0 15px 0 0;">Key checkout out</th>
+          <th style="padding:0 15px 0 0;">Has Key</th>
           <th style="padding:0 15px 0 0;">Options</th>
           </tr>
         <% @users_sorted.each do |user| %>

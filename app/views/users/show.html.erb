@@ -3,9 +3,14 @@
 </div>
 
 <div class = "container">
-  <h1>User Info</h1>
-
-  <button><%= link_to("Edit user", edit_user_path(@user), :class => 'edit-link') %></button>
+  
+  <div class="row">
+  <div class="col" align="center">
+    <div class="Titles">
+      User Info
+    </div>
+  </div>
+  </div>
 
   <table class="table" summary = "user form fields">
     <tr>
@@ -30,6 +35,9 @@
    </tr>
   </table>
 
+  <div class="form-buttons" align="center">
+  <button><%= link_to("Edit user", edit_user_path(@user), :class => 'edit-link') %></button>
   <button><%= link_to("Delete user", delete_user_path(@user), :class => 'delete-link') %></button>
+  </div>
 
 </div>

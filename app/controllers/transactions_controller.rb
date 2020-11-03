@@ -12,9 +12,87 @@ class TransactionsController < ApplicationController
   def index
     user = User.find(session[:user_id])
     if (user.permissions < 2)
-      @transactions = Transaction.where(:requestor_email => user.email)
+      @transactions = Transaction.where(:requestor_email => user.email).sorted
+      if ((params[:search_tag] != nil) && (params[:search_tag] != ""))
+        @transactions_person = Transaction.where(requestor_name: params[:search_tag])
+        @transactions_item = Transaction.where(item_name: params[:search_tag])
+        @transactions_amount = Transaction.where(item_quantity: params[:search_tag])
+        @transactions_event = Transaction.where(event: params[:search_tag])
+        @transactions_created = Transaction.where(created_at: params[:search_tag])
+        @transactions_status = Transaction.where(type_: params[:search_tag])
+        @transactions_sorted = [].concat(@transactions_person)
+                                  .concat(@transactions_item)
+                                  .concat(@transactions_amount)
+                                  .concat(@transactions_event)
+                                  .concat(@transactions_created)
+                                  .concat(@transactions_status)
+        @transactions_sorted = @transactions_sorted.uniq
+      elsif (params[:sort_type] != nil)
+          @sort_type = params[:sort_type]
+          @sort_dir = params[:sort_dir]
+          if @sort_type == 'Person'
+              @transactions_sorted = @transactions.sort_by { |transaction| transaction.requestor_name }
+          elsif @sort_type == 'Item Name'
+              @transactions_sorted = @transactions.sort_by { |transaction| [transaction.item_name] }
+          elsif @sort_type == 'Item Amount'
+              @transactions_sorted = @transactions.sort_by { |transaction| transaction.item_quantity }
+          elsif @sort_type == 'Event'
+              @transactions_sorted = @transactions.sort_by { |transaction| transaction.event }
+          elsif @sort_type == 'Checkout Date'
+              @transactions_sorted = @transactions.sort_by { |transaction| transaction.created_at }
+            elsif @sort_type == 'Status'
+              @transactions_sorted = @transactions.sort_by { |transaction| transaction.type_ }
+          end
+
+          if @sort_dir == 'Z -> A'
+              @transactions_sorted = @transactions_sorted.reverse
+          end
+      else
+          @sort_type = 'Checkout Date'
+          @sort_dir = 'A -> Z'
+          @transactions_sorted = @transactions
+      end
     else
       @transactions = Transaction.sorted
+      if ((params[:search_tag] != nil) && (params[:search_tag] != ""))
+        @transactions_person = Transaction.where(requestor_name: params[:search_tag])
+        @transactions_item = Transaction.where(item_name: params[:search_tag])
+        @transactions_amount = Transaction.where(item_quantity: params[:search_tag])
+        @transactions_event = Transaction.where(event: params[:search_tag])
+        @transactions_created = Transaction.where(created_at: params[:search_tag])
+        @transactions_status = Transaction.where(type_: params[:search_tag])
+        @transactions_sorted = [].concat(@transactions_person)
+                                  .concat(@transactions_item)
+                                  .concat(@transactions_amount)
+                                  .concat(@transactions_event)
+                                  .concat(@transactions_created)
+                                  .concat(@transactions_status)
+        @transactions_sorted = @transactions_sorted.uniq
+      elsif (params[:sort_type] != nil)
+        @sort_type = params[:sort_type]
+        @sort_dir = params[:sort_dir]
+        if @sort_type == 'Person'
+            @transactions_sorted = @transactions.sort_by { |transaction| transaction.requestor_name }
+        elsif @sort_type == 'Item Name'
+            @transactions_sorted = @transactions.sort_by { |transaction| [transaction.item_name] }
+        elsif @sort_type == 'Item Amount'
+            @transactions_sorted = @transactions.sort_by { |transaction| transaction.item_quantity }
+        elsif @sort_type == 'Event'
+            @transactions_sorted = @transactions.sort_by { |transaction| transaction.event }
+        elsif @sort_type == 'Checkout Date'
+            @transactions_sorted = @transactions.sort_by { |transaction| transaction.created_at }
+          elsif @sort_type == 'Status'
+            @transactions_sorted = @transactions.sort_by { |transaction| transaction.type_ }
+        end
+
+        if @sort_dir == 'Z -> A'
+            @transactions_sorted = @transactions_sorted.reverse
+        end
+      else
+          @sort_type = 'Checkout Date'
+          @sort_dir = 'A -> Z'
+          @transactions_sorted = @transactions
+      end
     end
   end
 
@@ -47,7 +125,6 @@ class TransactionsController < ApplicationController
     if is_email_valid?(@transaction.requestor_email)
       if @transaction.save
         @log.save
-        flash[:notice] = 'Transaction Created Successfully!'
         redirect_to(transactions_path)
       else
         render('new')
@@ -70,7 +147,7 @@ class TransactionsController < ApplicationController
     @user = User.find(params[:uid])
 
     if (params[:checkout_amount].to_i > @item.avail_stock)
-        flash[:notice] = "Insufficient inventory."
+        flash[:notice] = "Sorry, there aren't enough items available to checkout"
         redirect_to({:controller => 'items', :action => 'index', :id => @item.id})
     else
       @item.avail_stock = @item.avail_stock-(params[:checkout_amount].to_i)
@@ -105,7 +182,6 @@ class TransactionsController < ApplicationController
 
       @log.save
 
-      flash[:notice] = "Item checked out with transaction controller"
       redirect_to({:controller => 'items', :action => 'index'})
     end
   end
@@ -142,8 +218,7 @@ class TransactionsController < ApplicationController
 
     if @transaction.save
       @log.save
-      flash[:notice] = "Check Out ID #'#{@transaction.id}' Checked In Successfully!"
-      redirect_to(transaction_path(@transaction))
+      redirect_to(log_index_path)
     else
       render('edit')
     end
@@ -167,7 +242,7 @@ class TransactionsController < ApplicationController
               @transactions_sorted = @transactions.sort_by { |transaction| [transaction.requestor_name] }
           elsif @sort_type == 'Checkout Date'
               @transactions_sorted = @transactions.sort_by { |transaction| transaction.updated_at.in_time_zone('America/Chicago').strftime('%I:%M:%S %p') }
-          elsif @sort_type == 'Amount'
+          elsif @sort_type == 'Item Amount'
               @transactions_sorted = @transactions.sort_by { |transaction| transaction.item_quantity }
           elsif @sort_type == 'Event'
               @transactions_sorted = @transactions.sort_by { |transaction| transaction.event }

@@ -39,19 +39,7 @@ Rails.application.routes.draw do
   #get 'transactions/delete'
 
   resources :log, only: [:index]
-
-  get 'checkout', to: 'checkout#index'
-  post 'checkout/submit'
-  get 'checkout/showAll'
-  get 'checkout/myItems'
-  get 'checkout/show'
-  get 'checkout/myitem_show'
-  get 'checkout/showAllUserItems'
-
-  get 'return', to: 'return#index'
-  get 'return/index_merch'
-  post 'return/submit'
-
+  
   get 'users/key', to: 'users#will_checkout_or_return_key'
   post 'users/key', to: 'users#checkout_or_return_key'
 
