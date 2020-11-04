@@ -1,7 +1,7 @@
 desc "This task is called by the Heroku scheduler to send email reminders."
 
 task :send_reminders => :environment do
-    @transaction = Transaction.find(params[:id])
+    @transaction = Transaction
     @transaction.each do |t|
         if Date.today  > t.created_at + 5.minutes
             UserMailer.with(transaction: t).reminding_email.deliver
