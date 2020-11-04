@@ -26,7 +26,7 @@ class UserMailer < ApplicationMailer
   end
 
   def reminding_email
-    @transaction = transaction
+    @transaction = params[:transaction]
     mail(to: @transaction.requestor_email, subject: 'REMINDER: return checked out item to SWE')
   end
 end
