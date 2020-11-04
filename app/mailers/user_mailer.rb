@@ -24,4 +24,9 @@ class UserMailer < ApplicationMailer
     @user = user
     mail to: user.email, subject: 'Item Return Reminder'
   end
+
+  def reminding_email
+    @transaction = transaction
+    mail(to: @transaction.requestor_email, subject: 'REMINDER: return checked out item to SWE')
+  end
 end
